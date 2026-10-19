@@ -1,0 +1,5 @@
+lib/config.php
+lib/bootstrap_extra.php
+*.sqlite
+*.sqlite3
+data/

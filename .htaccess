@@ -1,0 +1,18 @@
+Options -Indexes
+RewriteEngine On
+
+# PlainSlots pretty URLs (opaque base62 slugs — no directory guesses)
+# /p/{slug}     → poll.php?slug=…
+RewriteRule ^p/([0-9A-Za-z]{1,16})$ poll.php?slug=$1 [L,QSA]
+# /admin/{edit} → admin.php?edit_slug=…
+RewriteRule ^admin/([0-9A-Za-z]{1,32})$ admin.php?edit_slug=$1 [L,QSA]
+
+# routing fallback for everything else that is not a real file/dir
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# never serve the internals directly
+RedirectMatch 404 ^/(lib|src|tests|migrations|views|data)(/|$)
+RedirectMatch 404 ^/config\.example\.php$
+RedirectMatch 404 ^/api/admin/_guard\.php$
