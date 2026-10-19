@@ -58,3 +58,17 @@ External APIs: **none** — $0.
 - `.htaccess` blocks `/lib /src /tests /migrations /views /data`, `config.example.php`,
   and `api/admin/_guard.php`; `Options -Indexes`.
 - Admin URLs use 16-char CSPRNG base62 secrets; unknown = generic 404.
+## Run / Deploy
+
+See **HOSTINGER-DEPLOY.md** for the full operator guide (subdomain
+myapp3mvp.earth-turtle.com, database, config, migrations, smoke test).
+Quick start: upload repo → `cp lib/config.example.php lib/config.php`
+→ fill db creds → run `migrations/001_create_polls.sql` → done.
+
+## QA verdict (2026-10-19)
+
+stack-standard: **PASS**. Browser pass done (Chromium/Playwright) under
+real Apache 2.4 + PHP 8.3 against both sqlite and real MySQL 8 (fresh
+DB from migrations, re-run safe). 48/48 unit tests. Admin close/delete
+via no-JS forms end on raw JSON (cosmetic, see QA card). XSS escaped,
+hostile input rejected, internals 404, config-missing message clean.
